@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/orbus-poc/static/css/main.a0fced12.css",
+    "main.js": "/orbus-poc/static/js/main.1b6f9e1d.js",
+    "index.html": "/orbus-poc/index.html",
+    "main.a0fced12.css.map": "/orbus-poc/static/css/main.a0fced12.css.map",
+    "main.1b6f9e1d.js.map": "/orbus-poc/static/js/main.1b6f9e1d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a0fced12.css",
+    "static/js/main.1b6f9e1d.js"
+  ]
+}
