@@ -1,33 +1,53 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import WebcamImage from "./WebcamImage";
 import DetectRTC from "detectrtc";
+import Webcam from "react-webcam";
+import { v4 as uuid } from "uuid";
 
 function App() {
-  const [img, setImg] = useState(null);
+  const [is_loading,setIsLoading] = useState(false);
+  const [err,setErr] = useState("");
+  const [imgGallery, setImgGallery] = useState([]);
   const webcamRef = useRef(null);
   
   const capture = useCallback(() => {
-    debugger
+    const img_id = uuid();
+    setIsLoading(true);
     const imageSrc = webcamRef.current.getScreenshot();
-    setImg(imageSrc);
-  }, [webcamRef]);
+    let imgData = {
+      id : img_id,
+      data : imageSrc
+    }
+    setImgGallery([...imgGallery,imgData]);
+  }, [webcamRef,imgGallery]);
 
+  useEffect(() => {
+    if (is_loading){
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 400);
+    }
+  },[is_loading])
+
+  const handleMediaError = (msg) => {
+    const {message} = msg;
+    setErr(message);
+  }
   return (
     <div className="h-screen flex justify-center items-center bg-slate-200">
       <div className="container flex flex-col m-auto md:w-[350px] md:h-[550px] w-full h-full bg-white rounded-lg shadow-md">
-        <div className="flex-1">
+        <div className="w-full h-full relative">
           {
-            (DetectRTC.hasWebcam === true) ? <WebcamImage webcamRef={webcamRef} /> : <div className="flex justify-center items-center h-full select-none"><p className="p-4">Please install an external webcam device.</p></div>
+            (err.length === 0) ? <WebcamImage webcamRef={webcamRef} handleMediaError={handleMediaError} is_loading={is_loading} /> : <div className="flex justify-center items-center h-full select-none"><p className="p-4">{err}</p></div>
           }
-        </div>
-        <div className="h-24 py-5 px-8 bg-[rgba(0,0,0,0.7)] rounded-lg flex justify-between">
+        <div className="absolute bottom-0 w-full h-24 py-5 px-8 bg-[rgba(0,0,0,0.6)] rounded-t-lg flex justify-between">
           <div className="bg-gray-400 text-white p-4 rounded-2xl flex justify-center items-center cursor-pointer">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-9">
             <path strokeLinecap="round" strokeLinejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
           </svg>
 
           </div>
-          <div className="bg-white -mt-3 p-5 py-10 rounded-2xl flex justify-center items-center cursor-pointer" {...(DetectRTC.hasWebcam === true && {onClick : capture}) } >
+          <div className="bg-white -mt-3 p-5 py-10 rounded-2xl flex justify-center items-center cursor-pointer" {...(err.length === 0 && {onClick : capture}) } >
             <div className="bg-red-700 w-9 h-9 rounded-full">
             </div>
           </div>
@@ -39,8 +59,10 @@ function App() {
           </div>
 
         </div>
+        </div>
       </div>
     </div>
+    // <Webcam/>
   );
 }
 

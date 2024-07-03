@@ -1,26 +1,25 @@
 import Webcam from "react-webcam";
 
 function WebcamImage(props) {
-    const {webcamRef} = props;
+    const {webcamRef,handleMediaError,is_loading} = props;
     const videoConstraints = {
-        width: 420,
-        height: 420,
         facingMode: "user",
     };
-
     return (
-        <div className="Container">
-            <Webcam
-                audio={false}
-                mirrored={true}
-                height={400}
-                width={400}
-                ref={webcamRef}
-                screenshotFormat="image/jpeg"
-                videoConstraints={videoConstraints}
-            />
-            {/* <button onClick={capture}>Capture photo</button> */}
-        </div>
+        <Webcam
+            audio={false}
+            mirrored={true}
+            style={{
+                width : '100%',
+                height : '100%',
+                opacity : is_loading ? 0.5 : 1,
+                transition: "opacity 0.1s ease",
+            }}
+            ref={webcamRef}
+            screenshotFormat="image/jpeg"
+            videoConstraints={videoConstraints}
+            onUserMediaError = {handleMediaError}
+        />
     );
 }
 
