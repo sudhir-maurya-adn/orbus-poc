@@ -14,6 +14,7 @@ function WebcamImage(props) {
                 height : '100%',
                 opacity : is_loading ? 0.5 : 1,
                 transition: "opacity 0.1s ease",
+                objectFit : "fill"
             }}
             ref={webcamRef}
             screenshotFormat="image/jpeg"
