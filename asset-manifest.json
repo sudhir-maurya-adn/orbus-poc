@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/orbus-poc/static/css/main.7e382659.css",
-    "main.js": "/orbus-poc/static/js/main.69e88ce5.js",
+    "main.js": "/orbus-poc/static/js/main.5b3d931b.js",
     "index.html": "/orbus-poc/index.html",
     "main.7e382659.css.map": "/orbus-poc/static/css/main.7e382659.css.map",
-    "main.69e88ce5.js.map": "/orbus-poc/static/js/main.69e88ce5.js.map"
+    "main.5b3d931b.js.map": "/orbus-poc/static/js/main.5b3d931b.js.map"
   },
   "entrypoints": [
     "static/css/main.7e382659.css",
-    "static/js/main.69e88ce5.js"
+    "static/js/main.5b3d931b.js"
   ]
 }
